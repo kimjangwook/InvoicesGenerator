@@ -51,7 +51,7 @@
           </tr>
           </tbody>
           <tr class="font-weight-bold">
-            <td class="text-right" colspan="4">合計金額</td>
+            <td class="text-right" colspan="4">合計金額(税込)</td>
             <td>{{ yenFormat(getTotalAmount()) }}</td>
           </tr>
         </table>

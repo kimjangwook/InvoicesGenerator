@@ -3,23 +3,30 @@
 
     <nav class="navbar navbar-light bg-light fixed-top">
       <nuxt-link to="/" class="navbar-brand">請求書作成アプリ</nuxt-link>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a href="#" @click.prevent="saveCondition()" class="nav-link">情報保存</a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" @click.prevent="loadCondition()" class="nav-link">情報ロード</a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" @click.prevent="goToPrintPage()" class="nav-link">請求書生成</a>
+          </li>
+        </ul>
+      </div>
+
     </nav>
 
     <div class="container" style="margin-top: 70px;">
-      <div class="form-group row">
-        <div class="col-6">
-          <button @click.prevent="saveCondition()" class="btn btn-dark">情報保存</button>
-        </div>
-        <div class="col-6">
-          <button @click.prevent="loadCondition()" class="btn btn-light">情報ロード</button>
-        </div>
-      </div>
 
-      <div class="form-group row">
-        <div class="col-12">
-          <button @click.prevent="goToPrintPage()" class="btn btn-primary">請求書生成</button>
-        </div>
-      </div>
 
       <div class="form-group row">
         <label for="date" class="col-12 col-form-label">請求日</label>
@@ -200,10 +207,12 @@ export default {
     },
     saveCondition: function () {
       this.$cookies.set('invoice-conditions', this.formData);
+      this.$toast.success('保存しました。');
     },
     loadCondition: function () {
       this.formData = this.$cookies.get('invoice-conditions');
       this.resolveAddress();
+      this.$toast.success('ロードしました。');
     },
     goToPrintPage: function () {
       this.$store.commit('setFormData', this.formData);

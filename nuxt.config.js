@@ -47,12 +47,18 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     'cookie-universal-nuxt',
+    '@nuxtjs/toast',
   ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+  },
+
+  toast: {
+    duration: 2000,
+    position: 'top-center',
   },
   /*
   ** Build configuration
