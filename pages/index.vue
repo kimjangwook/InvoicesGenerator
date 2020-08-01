@@ -206,11 +206,16 @@ export default {
       this.formData.list.splice(idx, 1);
     },
     saveCondition: function () {
-      this.$cookies.set('invoice-conditions', this.formData);
+      window.localStorage.setItem('invoice-conditions', JSON.stringify(this.formData));
       this.$toast.success('保存しました。');
     },
     loadCondition: function () {
-      this.formData = this.$cookies.get('invoice-conditions');
+      let data = window.localStorage.getItem('invoice-conditions');
+      if (!data) {
+        this.$toast.error('保存されているデータがありません。');
+        return;
+      }
+      this.formData = JSON.parse(data);
       this.resolveAddress();
       this.$toast.success('ロードしました。');
     },
