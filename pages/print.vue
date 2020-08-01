@@ -66,7 +66,7 @@
       <div class="col-12">お支払い期限:{{ formData.deadline }}</div>
 
       <div class="col-12  print-btn mt-5 text-center">
-        <button class="btn btn-primary" @click.prevent="printToDownloadPDF()">プリント</button>
+        <button class="btn btn-primary" @click.prevent="downloadInvoiceImage()">請求書ダウンロード</button>
       </div>
     </div>
   </div>
@@ -101,7 +101,7 @@ export default {
       });
       return amount;
     },
-    printToDownloadPDF: async function () {
+    downloadInvoiceImage: async function () {
       document.querySelector('.print-btn').setAttribute('data-html2canvas-ignore', 'true');
       let elem = document.querySelector('.page');
       let canvas = await html2canvas(elem, {
@@ -110,11 +110,15 @@ export default {
         scrollY: -window.scrollY,
       });
 
-      let doc = new jsPDF('p', 'mm', 'a4');
-      doc.setFillColor(255);
+
+
       let imgData = canvas.toDataURL('image/png', 1.0);
-      doc.addImage(imgData, 'PNG', 0, 0, doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight(), '', 'SLOW');
-      doc.save((new Date().toISOString().slice(0, 10))+'請求書.pdf');
+      let link = document.createElement("a");
+      link.download = (new Date().toISOString().slice(0, 10))+'請求書.png';
+      link.href = imgData;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
   }
 }
